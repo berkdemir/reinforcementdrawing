@@ -134,39 +134,36 @@ def draw_beam(
     return fig
 
 
-# ===== UI =====
+# ===== LAYOUT =====
 
-col1, col2 = st.columns(2)
+col1, col2 = st.columns([3, 2])  # wider drawing area
 
 with col1:
-    st.subheader("Geometry")
+    st.header("Inputs")
 
+    st.subheader("Geometry")
     beam_width = st.number_input("Beam width (mm)", value=1000)
     beam_height = st.number_input("Beam height (mm)", value=1000)
     layer_spacing = st.number_input("Layer spacing (mm)", value=25)
 
     st.subheader("Covers")
-
     top_cover = st.number_input("Top cover (mm)", value=110)
     bottom_cover = st.number_input("Bottom cover (mm)", value=45)
 
-with col2:
     st.subheader("Reinforcement")
-
     top_reinf = st.text_input(
         "Top reinforcement",
         value="K32/150+Y25/220+K25/134"
     )
-
     bottom_reinf = st.text_input(
         "Bottom reinforcement",
         value="Y32/150+K25/150+6Ø32"
     )
 
 
-# ===== DRAW =====
+with col2:
+    st.header("Section")
 
-if st.button("Draw Beam"):
     try:
         fig = draw_beam(
             top_reinf,
@@ -178,7 +175,7 @@ if st.button("Draw Beam"):
             layer_spacing
         )
 
-        st.pyplot(fig)
+        st.pyplot(fig, use_container_width=True)
 
     except Exception as e:
-        st.error(f"Error: {e}")
+        st.error(f"Input error: {e}")
