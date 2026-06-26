@@ -1,2 +1,3 @@
 streamlit
 matplotlib
+blue-prints
